@@ -1,12 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Familia;
 use Illuminate\Http\Request;
-use App\Models\Factura;
-use App\Models\Producto;
 
-class FacturaController extends Controller
+class FamiliaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +13,9 @@ class FacturaController extends Controller
      */
     public function index()
     {
-        $facturas=Factura::all();
+        $familias=Familia::all();
       
-        return view('lista',['facturas'=>$facturas]);
+        return view('familias.index',['familias'=>$familias]);
     }
 
     /**
@@ -27,7 +25,7 @@ class FacturaController extends Controller
      */
     public function create()
     {
-        //
+        return view('familias.create');
     }
 
     /**
@@ -38,7 +36,11 @@ class FacturaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $familia = new Familia;
+        $familia->descripcion=$request->descripcion;
+        $familia->save();
+
+        return redirect()->route('familias.index');
     }
 
     /**
@@ -58,34 +60,27 @@ class FacturaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($num)
+    public function edit($id)
     {
-        $factura=Factura::find($num);
-       $productos=Producto::all();
-        return view('factura',['factura'=>$factura,'productos'=>$productos]);
+        $familia=Familia::find($id);
+        return view('familias.edit',['familia'=>$familia]);
+        
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $num
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Factura $factura, Request $request)
+    public function update(Familia $familia, Request $request)
     {
-        $factura->fecha=$request->fecha;
-        $factura->nombre=$request->nombre;
-        $factura->direccion=$request->direccion;
-        $factura->cpostal=$request->cpostal;
-        $factura->poblacion=$request->poblacion;
-        $factura->provincia=$request->provincia;
-        $factura->telefono=$request->telefono;
-        $factura->cliente_id=$request->cliente_id;
+        $familia->descripcion=$request->descripcion;
 
-        $factura->update();
+        $familia->update();
 
-        return redirect()->route('facturas.index');
+        return redirect()->route('familias.index');
     }
 
     /**
@@ -94,8 +89,10 @@ class FacturaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Familia $familia)
     {
-        //
+        $familia->delete();
+
+        return redirect()->route('familias.index');
     }
 }

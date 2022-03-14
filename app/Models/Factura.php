@@ -15,4 +15,7 @@ class Factura extends Model
     public function lineas(){
         return $this->hasMany('App\Models\Linea');
     }
+    public function cliente(){
+        return $this->belongsTo('App\Models\Cliente');
+    }
 }

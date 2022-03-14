@@ -9,7 +9,11 @@ class Producto extends Model
 {
     use HasFactory;
 
+    
     public function lineas(){
         return $this->hasMany('App\Models\Linea');
+    }
+    public function familia(){
+        return $this->belongsTo('App\Models\Familia');
     }
 }

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Linea;
+use App\Models\Producto;
+use App\Models\Factura;
 
 class LineaController extends Controller
 {
@@ -66,9 +69,20 @@ class LineaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Factura $factura, Request $request)
     {
-        //
+        $factura=Factura::find($request->factura_numero);
+        $productos=Producto::all();
+        $linea = new Linea;
+        $linea->descripcion=$request->descripcion;
+        $linea->cantidad=$request->cantidad;
+        $linea->precio=$request->precio;
+        $linea->factura_numero=$factura->numero;
+        $linea->producto_id=$request->producto_id;
+        $linea->save();
+
+        
+        return view('factura',['factura'=>$factura,'productos'=>$productos]);
     }
 
     /**

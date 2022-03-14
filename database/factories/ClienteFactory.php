@@ -3,9 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Cliente;
 
-class FacturaFactory extends Factory
+class ClienteFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -15,18 +14,14 @@ class FacturaFactory extends Factory
     public function definition()
     {
         return [
-            'numero'=>$this->faker->unique()->numberBetween(1,100),
-            'nombre'=>$this->faker->sentence(),
+            'nif'=>$this->faker->numerify('########'),
+            'nombre'=>$this->faker->firstName(),
             'direccion'=>$this->faker->sentence(),
             'poblacion'=>$this->faker->word(),
             'provincia'=>$this->faker->word(),
             'cpostal'=>$this->faker->numerify('#####'),
+            'email' => $this->faker->unique()->safeEmail(),
             'telefono'=>$this->faker->phoneNumber(),
-            'fecha'=>$this->faker->date(),
-            'cliente_id'=>function(){
-                return Cliente::factory()->create()->id;
-            },
-            
         ];
     }
 }

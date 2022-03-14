@@ -9,8 +9,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <title>@yield('title')</title>
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<body style="background-color:rgb(224, 224, 224);">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
           <a class="navbar-brand" href="{{route('home')}}">INICIO</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,27 +19,37 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle text-primary" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   CLIENTES
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <li><a class="dropdown-item" href="#">Crear</a></li>
-                  <li><a class="dropdown-item" href="#">Listar</a></li>
+                  <li><a class="dropdown-item" href="{{route('clientes.create')}}">Crear</a></li>
+                  <li><a class="dropdown-item" href="{{route('clientes.index')}}">Listar</a></li>
                   
                 </ul>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle text-primary" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   PRODUCTOS
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <li><a class="dropdown-item" href="#">Crear</a></li>
-                  <li><a class="dropdown-item" href="#">Listar</a></li>
+                  <li><a class="dropdown-item" href="{{route('productos.create')}}">Crear</a></li>
+                  <li><a class="dropdown-item" href="{{route('productos.index')}}">Listar</a></li>
                  
                 </ul>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle text-primary" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  FAMILIAS
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li><a class="dropdown-item" href="{{route('familias.create')}}">Crear</a></li>
+                  <li><a class="dropdown-item" href="{{route('familias.index')}}">Listar</a></li>
+                 
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-primary" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   FACTURAS
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -47,6 +57,11 @@
                   <li><a class="dropdown-item" href="{{route('facturas.index')}}">Listar</a></li>
                 </ul>
               </li>
+              @if (auth()->check())
+                <li>
+                  <a class="btn btn-outline-danger" href="{{route('login.destroy')}}" role="button">Log Out</a>
+                </li>
+              @endif
             </ul>
           </div>
         </div>

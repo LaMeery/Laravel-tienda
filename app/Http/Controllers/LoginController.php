@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Factura;
-use App\Models\Producto;
+use App\Models\User;
 
-class FacturaController extends Controller
+class LoginController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,7 @@ class FacturaController extends Controller
      */
     public function index()
     {
-        $facturas=Factura::all();
-      
-        return view('lista',['facturas'=>$facturas]);
+        //
     }
 
     /**
@@ -27,7 +24,7 @@ class FacturaController extends Controller
      */
     public function create()
     {
-        //
+        return view('auth.login');
     }
 
     /**
@@ -38,7 +35,12 @@ class FacturaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (auth()->attempt(request(['name','password']))==false){
+            return back()->withErrors([
+                'message' => 'User y/o password incorrect'
+            ]);
+        }
+        return redirect()->route('home');
     }
 
     /**
@@ -58,34 +60,21 @@ class FacturaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($num)
+    public function edit($id)
     {
-        $factura=Factura::find($num);
-       $productos=Producto::all();
-        return view('factura',['factura'=>$factura,'productos'=>$productos]);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $num
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Factura $factura, Request $request)
+    public function update(Request $request, $id)
     {
-        $factura->fecha=$request->fecha;
-        $factura->nombre=$request->nombre;
-        $factura->direccion=$request->direccion;
-        $factura->cpostal=$request->cpostal;
-        $factura->poblacion=$request->poblacion;
-        $factura->provincia=$request->provincia;
-        $factura->telefono=$request->telefono;
-        $factura->cliente_id=$request->cliente_id;
-
-        $factura->update();
-
-        return redirect()->route('facturas.index');
+        //
     }
 
     /**
@@ -94,8 +83,9 @@ class FacturaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        auth()->logout();
+        return redirect()->route('login.create');
     }
 }
