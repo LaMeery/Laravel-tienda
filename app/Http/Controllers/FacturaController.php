@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Factura;
 use App\Models\Producto;
+use App\Models\Cliente;
 
 class FacturaController extends Controller
 {
@@ -27,7 +28,8 @@ class FacturaController extends Controller
      */
     public function create()
     {
-        //
+        $clientes=Cliente::all();
+        return view('create',['clientes'=>$clientes]);
     }
 
     /**
@@ -38,7 +40,20 @@ class FacturaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $factura = new Factura;
+        $d=rand(1,999);
+        $factura->numero=$d;
+        $factura->fecha=$request->fecha;
+        $factura->nombre=$request->nombre;
+        $factura->direccion=$request->direccion;
+        $factura->cpostal=$request->cpostal;
+        $factura->poblacion=$request->poblacion;
+        $factura->provincia=$request->provincia;
+        $factura->telefono=$request->telefono;
+        $factura->cliente_id=$request->cliente_id;
+        $factura->save();
+
+        return redirect()->route('facturas.index');
     }
 
     /**
